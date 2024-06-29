@@ -83,7 +83,7 @@ app.post('/data', async (req, res) => {
 
         // INSERT INTO NumberPlate() VALUES();
 
-        return res.status(200);
+        return res.status(200).json({});
     } catch (error) {
         await bot.answerWebAppQuery(query_id, {
             type: 'article',
@@ -91,7 +91,7 @@ app.post('/data', async (req, res) => {
             title: 'Ошибка',
             input_message_content: { message_text: 'По техническим причинам не удалось добавить номер в систему.' }
         })
-        return res.status(500);
+        return res.status(500).json({});
     }
 })
 
