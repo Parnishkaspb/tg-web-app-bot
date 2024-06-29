@@ -50,7 +50,22 @@ bot.on('message', async (msg) => {
 
 
 app.post('/web-data', async (req, res) => {
-    console.log('I,m here!');
+    const fs = require('fs');
+
+    // Указываем путь и имя файла
+    const filePath = './example.txt';
+
+    // Указываем содержимое файла
+    const fileContent = 'Hello, this is a test file created using Node.js';
+
+    // Записываем содержимое в файл
+    fs.writeFile(filePath, fileContent, (err) => {
+        if (err) {
+            console.error('Error writing to file', err);
+        } else {
+            console.log('File has been created successfully');
+        }
+    });
     const { query_id, products, totalPrice } = req.body;
     try {
         await bot.answerWebAppQuery(query_id, {
