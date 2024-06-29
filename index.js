@@ -16,18 +16,19 @@ bot.on('message', async (msg) => {
     const text = msg.text;
 
     if (text === '/start') {
-        await bot.sendMessage(chatId, 'Кнопки доступа', {
-            reply_markup: {
-                keyboard: [
-                    [{ text: 'Заполните форму', web_app: { url: webAppUrl + '/form' } }]
-                ]
-            }
-        });
-
-        await bot.sendMessage(chatId, 'Кнопки доступа', {
+        // await bot.sendMessage(chatId, 'Здравствуйте! Управляющий на связи🤝', {
+        //     reply_markup: {
+        //         keyboard: [
+        //             [{ text: 'Обратная связь', web_app: { url: webAppUrl + '/form' } }]
+        //         ]
+        //     }
+        // });
+        await bot.sendMessage(chatId, `Здравствуйте! Управляющий на связи🤝\n${msg.from.username}, в этом боте вы можете:`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{ text: 'Пропуск', web_app: { url: webAppUrl } }]
+                    [{ text: 'Заказать услугу', web_app: { url: webAppUrl } }],
+                    [{ text: 'Мои пропуска', web_app: { url: webAppUrl + '/all_number_template' } }],
+                    [{ text: 'Заказать документы', web_app: { url: webAppUrl + '/all_number_template' } }]
                 ]
             }
         });
@@ -38,8 +39,8 @@ bot.on('message', async (msg) => {
             const data = JSON.parse(msg?.web_app_data?.data);
 
             await bot.sendMessage(chatId, 'Спасибо за обратную связь!');
-            await bot.sendMessage(chatId, 'Страна: ' + data?.country);
-            await bot.sendMessage(chatId, 'Улица: ' + data?.street);
+            // await bot.sendMessage(chatId, 'Страна: ' + data?.country);
+            // await bot.sendMessage(chatId, 'Улица: ' + data?.street);
         } catch (error) {
             console.log(error);
         }
@@ -67,7 +68,31 @@ app.post('/web-data', async (req, res) => {
         })
         return res.status(500);
     }
+})
 
+
+app.post('/data', async (req, res) => {
+    const { query_id, number, timeToEnd, dateTime, subject, what } = req.body;
+    try {
+        await bot.answerWebAppQuery(query_id, {
+            type: 'article',
+            id: query_id,
+            title: 'Успешное добавление',
+            input_message_content: { message_text: `РГЗ ${number} успешно добавлен в систему. Срок действия: ${dateTime}` }
+        })
+
+        // INSERT INTO NumberPlate() VALUES();
+
+        return res.status(200);
+    } catch (error) {
+        await bot.answerWebAppQuery(query_id, {
+            type: 'article',
+            id: query_id,
+            title: 'Ошибка',
+            input_message_content: { message_text: 'По техническим причинам не удалось добавить номер в систему.' }
+        })
+        return res.status(500);
+    }
 })
 
 
