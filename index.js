@@ -16,13 +16,13 @@ bot.on('message', async (msg) => {
     const text = msg.text;
 
     if (text === '/start') {
-        await bot.sendMessage(chatId, 'Здравствуйте! Управляющий на связи🤝', {
-            reply_markup: {
-                keyboard: [
-                    [{ text: 'Обратная связь', web_app: { url: webAppUrl + '/add_new_number_teplate' } }]
-                ]
-            }
-        });
+        // await bot.sendMessage(chatId, 'Здравствуйте! Управляющий на связи🤝', {
+        //     reply_markup: {
+        //         keyboard: [
+        //             [{ text: 'Обратная связь', web_app: { url: webAppUrl + '/form' } }]
+        //         ]
+        //     }
+        // });
         await bot.sendMessage(chatId, `Здравствуйте! Управляющий на связи🤝\n${msg.from.username}, в этом боте вы можете:`, {
             reply_markup: {
                 inline_keyboard: [
