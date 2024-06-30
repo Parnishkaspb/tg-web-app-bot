@@ -88,32 +88,35 @@ app.post('/web-data', async (req, res) => {
 
 
 app.post('/data', async (req, res) => {
-    // const data = req.body;
-    // return res.status(200).json({ data });
-    const { queryId, number } = req.body;
-    try {
-        await bot.answerWebAppQuery(queryId, {
-            type: 'article',
-            id: queryId,
-            title: 'Успешное добавление',
-            input_message_content: { message_text: `РГЗ ${number} успешно добавлен в систему. Срок действия: ${dateTime}` }
-        })
+    console.log(req.body);
+    return res.status(200).json({});
 
-        // INSERT INTO NumberPlate() VALUES();
-
-        return res.status(200).json({});
-    } catch (error) {
-        await bot.answerWebAppQuery(queryId, {
-            type: 'article',
-            id: queryId,
-            title: 'Ошибка',
-            input_message_content: { message_text: 'По техническим причинам не удалось добавить номер в систему.' }
-        })
-        return res.status(500).json({});
-    }
 })
 
 
 
 const PORT = 8000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT));
+
+
+// // const { queryId, number } = req.body;
+// try {
+//     await bot.answerWebAppQuery(queryId, {
+//         type: 'article',
+//         id: queryId,
+//         title: 'Успешное добавление',
+//         input_message_content: { message_text: `РГЗ ${number} успешно добавлен в систему. Срок действия: ${dateTime}` }
+//     })
+
+//     // INSERT INTO NumberPlate() VALUES();
+
+//     return res.status(200).json({});
+// } catch (error) {
+//     await bot.answerWebAppQuery(queryId, {
+//         type: 'article',
+//         id: queryId,
+//         title: 'Ошибка',
+//         input_message_content: { message_text: 'По техническим причинам не удалось добавить номер в систему.' }
+//     })
+//     return res.status(500).json({});
+// }
