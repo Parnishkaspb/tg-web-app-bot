@@ -88,7 +88,8 @@ app.post('/web-data', async (req, res) => {
 
 
 app.post('/data', async (req, res) => {
-    return res.status(200).json({});
+    const data = req.body;
+    return res.status(200).json({ data });
     // const { query_id, number, timeToEnd, subject, what } = req.body;
     // try {
     //     await bot.answerWebAppQuery(query_id, {
